@@ -40,7 +40,7 @@ $feed->addMapper(function(array $data, Product $product) {
         ->setCategory($data['category_name'], $data['category_link'])
         ->addDiscount($data['old_price'], $data['discount_start_datetime'], $data['discount_end_datetime'])
         ->addShipping($data['shipping_cost'], $data['shipping_time'])
-        ->setAttributes(['color' => 'value1', 'material' => 'metal'])
+        ->setAttributes(['color' => ['value' => 'value1', 'type' => 'variation'], 'material' => 'metal'])
         ->setMainImage($data['image_main'])
         ->setAdditionalImages([$data['image1'], $data['image2']])
     ;

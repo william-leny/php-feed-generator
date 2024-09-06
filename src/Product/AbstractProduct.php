@@ -232,9 +232,9 @@ abstract class AbstractProduct
      *
      * @return $this
      */
-    public function setAttribute($name, $value)
+    public function setAttribute($name, $value, $type = '')
     {
-        $attributes = new ProductAttribute($name, $value);
+        $attributes = new ProductAttribute($name, $value, $type);
 
         $this->attributes[$attributes->getName()] = $attributes;
 
@@ -249,7 +249,11 @@ abstract class AbstractProduct
     public function setAttributes(array $attributes)
     {
         foreach ($attributes as $name => $attribute) {
-            $this->setAttribute($name, $attribute);
+            if (is_string($attribute)){
+                $this->setAttribute($name, $attribute);
+                continue;
+            }
+            $this->setAttribute($name, $attribute['value'], $attribute['type']);
         }
 
         return $this;
