@@ -22,7 +22,7 @@ class ProductAttribute
      * @param string $name
      * @param string $value
      */
-    public function __construct($name, $value, $type)
+    public function __construct($name, $value, $type = '')
     {
         $this->name  = trim($name);
         $this->value = trim($value);
