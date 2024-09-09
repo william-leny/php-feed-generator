@@ -249,11 +249,13 @@ abstract class AbstractProduct
     public function setAttributes(array $attributes)
     {
         foreach ($attributes as $name => $attribute) {
-            if (is_string($attribute)){
-                $this->setAttribute($name, $attribute);
+            if (is_array($attribute)){
+                $this->setAttribute($name, $attribute['value'], $attribute['type']);
+
                 continue;
             }
-            $this->setAttribute($name, $attribute['value'], $attribute['type']);
+
+            $this->setAttribute($name, $attribute);
         }
 
         return $this;
