@@ -23,7 +23,7 @@ class CsvProductFeedWriter implements Feed\ProductFeedWriterInterface
     private $dataFile;
 
     /**
-     * This file is used to temporary store serialized data for each line.
+     * This file is used to temporary store json data for each line.
      *
      * @var \SplTempFileObject
      */
@@ -75,7 +75,7 @@ class CsvProductFeedWriter implements Feed\ProductFeedWriterInterface
         $this->dataFile->fputcsv($this->headers);
 
         foreach ($this->tempFile as $current) {
-            if (! $current = unserialize($current)) {
+            if (! $current = json_decode($current, true)) {
                 continue;
             }
 
@@ -170,7 +170,7 @@ class CsvProductFeedWriter implements Feed\ProductFeedWriterInterface
     /**
      * This storage supports csv with headers. We do not know in advance headers, because they are dynamically
      * created based on product list. so we add new header item if meet, and keep them sorted based on alphabetical
-     * order. The serialized product is also sorted by key, in order to match row completion based on header line.
+     * order. The json encoded product is also sorted by key, in order to match row completion based on header line.
      *
      * We don't store data into memory, because very large collection processing can require more than memory
      * allowed by the PHP process.
@@ -190,6 +190,6 @@ class CsvProductFeedWriter implements Feed\ProductFeedWriterInterface
             sort($this->headers, SORT_NATURAL);
         }
 
-        $this->tempFile->fwrite(serialize($elements) . PHP_EOL);
+        $this->tempFile->fwrite(json_encode($elements) . PHP_EOL);
     }
 }
